@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  seriesdrawer:
+    env_file: .env
+    image: series-drawer
+    container_name: "series-drawer"
+    restart: always
+    ports:
+      - ${NODE_PORT}:${NODE_PORT}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.seriesdrawer.entrypoints=http"
+      - "traefik.http.routers.seriesdrawer.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=20000000"
+      - "traefik.http.middlewares.seriesdrawer-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.seriesdrawer.middlewares=seriesdrawer-https-redirect"
+      - "traefik.http.routers.seriesdrawer-secure.entrypoints=https"
+      - "traefik.http.routers.seriesdrawer-secure.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.seriesdrawer-secure.tls=true"
+      - "traefik.http.routers.seriesdrawer-secure.tls.certresolver=http"
+      - "traefik.http.services.seriesdrawer.loadbalancer.server.port=${NODE_PORT}"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
