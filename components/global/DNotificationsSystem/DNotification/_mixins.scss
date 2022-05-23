@@ -1,0 +1,27 @@
+@import '~assets/styles/settings/global-include';
+
+@mixin notif-colorization($color) {
+	background: color('base-0');
+
+	.icon-wrapper {
+		background-color: lighten($color, 15%);
+
+		& > li {
+			&:first-child {
+				background-color: lighten($color, 10%);
+			}
+
+			&:nth-child(2) {
+				background-color: darken($color, 10%);
+			}
+
+			&:last-child {
+				background-color: lighten($color, 10%);
+			}
+		}
+	}
+
+	.notif-footer {
+		background-color: lighten(color('base-0'), 5%);
+	}
+}

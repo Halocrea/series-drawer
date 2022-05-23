@@ -119,7 +119,7 @@
 										? 'wrong'
 										: ''
 								"
-								@change="(v) => setMode(index, idx, v)"
+								@change="v => setMode(index, idx, v)"
 							>
 								<option
 									class="text-center"
@@ -155,7 +155,7 @@
 										? 'wrong'
 										: ''
 								"
-								@change="(v) => setMap(index, idx, v)"
+								@change="v => setMap(index, idx, v)"
 							>
 								<option
 									class="text-center"

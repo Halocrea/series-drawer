@@ -13,22 +13,34 @@
 					and export the list as text for example or take a screenshot
 					of the pretty table. It does its best to make it even, and
 					it won't let the same map or mode show up in the same BoX
-					series (unless it's like a Bo26 or something).
+					series (unless it cannot do otherwise).
 				</p>
 			</div>
 			<transition name="d-transition--horizontal" mode="out-in">
 				<div
-					v-if="nbRounds < 0 || type < 0"
+					v-if="!showSettings && (nbRounds < 0 || type < 0)"
 					key="config-bracket"
 					class="my-4 p-4 w-auto bg-white shadow-lg rounded-md"
 				>
-					<h2 class="mx-6 my-4 text-xl font-bold">
-						Configure bracket
-					</h2>
+					<div class="w-full flex justify-between items-center pr-4">
+						<h2 class="mx-6 my-4 text-xl font-bold">
+							Configure bracket
+						</h2>
+						<d-button
+							size="sm"
+							@click="() => showSettings = true"
+						>
+							<svg-icon
+								name="settings"
+								class="w-4 h-4 mr-2"
+							/>
+							Settings
+						</d-button>
+					</div>
 					<config-form @configured="onConfigured" />
 				</div>
 				<div
-					v-else
+					v-else-if="!showSettings"
 					key="generated-bracket"
 					class="my-4 p-4 w-auto bg-white shadow-lg rounded-md"
 				>
@@ -43,6 +55,15 @@
 						:nb-games-finals="nbGamesFinals"
 						:nb-games-normal="nbGamesNormal"
 						:nb-rounds="nbRounds"
+					/>
+				</div>
+				<div
+					v-else
+					key="settings-bracket"
+					class="my-4 p-4 w-auto bg-white shadow-lg rounded-md"
+				>
+					<bracket-settings
+						@close="reset"
 					/>
 				</div>
 			</transition>
@@ -66,17 +87,22 @@
 				.
 			</p>
 		</div>
+		<client-only>
+			<d-notifications />
+		</client-only>
 	</div>
 </template>
 
 <script>
-import BracketTable from '~/components/BracketTable/BracketTable.vue'
-import ConfigForm   from '~/components/ConfigForm/ConfigForm.vue'
-import DButton      from '~/components/form/DButton/DButton.vue'
+import BracketSettings from '~/components/BracketSettings/BracketSettings.vue'
+import BracketTable    from '~/components/BracketTable/BracketTable.vue'
+import ConfigForm      from '~/components/ConfigForm/ConfigForm.vue'
+import DButton         from '~/components/form/DButton/DButton.vue'
 
 export default {
 	name      : 'IndexPage',
 	components: {
+		BracketSettings,
 		BracketTable,
 		ConfigForm,
 		DButton
@@ -86,10 +112,15 @@ export default {
 		nbGamesFinals: 5,
 		nbGamesNormal: 3,
 		nbRounds     : -1,
+		showSettings : false,
 		type         : -1
 	}),
 
 	methods: {
+		goToSettings () {
+
+		},
+
 		onConfigured ({ type, nbRounds, nbGamesNormal, nbGamesFinals }) {
 			this.type          = parseInt(type)
 			this.nbRounds      = parseInt(nbRounds)
@@ -98,8 +129,9 @@ export default {
 		},
 
 		reset () {
-			this.type     = -1
-			this.nbRounds = -1
+			this.nbRounds     = -1
+			this.showSettings = false
+			this.type         = -1
 		}
 	}
 }

@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import BracketArbiter from '~/components/BracketArbiter/BracketArbiter.vue'
 import BracketText    from '~/components/BracketText/BracketText.vue'
 import DButton        from '~/components/form/DButton/DButton.vue'
@@ -47,28 +48,7 @@ export default {
 		generating     : true,
 		highlightedMap : '',
 		highlightedMode: '',
-		objectives     : [
-			{ mode: 'CTF', map: 'Aquarius' },
-			{ mode: 'OB', map: 'Live Fire' },
-			{ mode: 'KotH', map: 'Recharge' },
-			{ mode: 'SH', map: 'Streets' },
-			{ mode: 'CTF', map: 'Bazaar' },
-			{ mode: 'SH', map: 'Recharge' },
-			{ mode: 'OB', map: 'Streets' },
-			{ mode: 'KotH', map: 'Live Fire' },
-			{ mode: 'CTF', map: 'Catalyst' },
-			{ mode: 'OB', map: 'Recharge' },
-			{ mode: 'KotH', map: 'Streets' },
-			{ mode: 'SH', map: 'Live Fire' }
-		],
-		slayers: [
-			{ mode: 'TS', map: 'Aquarius' },
-			{ mode: 'TS', map: 'Catalyst' },
-			{ mode: 'TS', map: 'Live Fire' },
-			{ mode: 'TS', map: 'Recharge' },
-			{ mode: 'TS', map: 'Streets' }
-		],
-		roundPrefixes: {
+		roundPrefixes  : {
 			WINNERS_BRACKET: 'WB ',
 			LOSERS_BRACKET : 'LB ',
 			GRAND_FINALS   : 'Finals'
@@ -77,7 +57,9 @@ export default {
 			WINNERS_BRACKET: 'WF',
 			LOSERS_BRACKET : 'LF',
 			GRAND_FINALS   : 'Reset'
-		}
+		},
+		usedMaps : [],
+		usedModes: []
 	}),
 
 	computed: {
@@ -144,7 +126,7 @@ export default {
 					else p.push({ name: g.mode, count: 1 })
 				})
 				return p
-					.filter((p) => p.name !== 'TS')
+					.filter((p) => p.name !== this.specialMode)
 					.sort((a, b) => a.name.localeCompare(b.name))
 			}, allModes)
 		},
@@ -160,11 +142,20 @@ export default {
 		modeCountAvg () {
 			const nbModes          = this.getModeStats.length
 			const nbNonSlayerGames = this.generated.reduce((p, c) => {
-				return p + c.filter((m) => !['', 'TS'].includes(m.mode)).length
+				return p + c.filter((m) => !['', this.specialMode].includes(m.mode)).length
 			}, 0)
 
 			return Math.round(nbNonSlayerGames / nbModes)
-		}
+		},
+
+		...mapGetters({
+			mapsWithCount : 'config/getMapsWithCount',
+			modesWithCount: 'config/getModesWithCount',
+			objectives    : 'config/getObjectives',
+			slayers       : 'config/getSlayers',
+			specialMode   : 'config/getSpecialMode',
+			tSGames       : 'config/getTSGames'
+		})
 	},
 
 	beforeMount () {
@@ -182,9 +173,9 @@ export default {
 				if (!maps.includes(round[i].map)) maps.push(round[i].map)
 				else return false
 
-				if (round[i].mode !== 'TS' && !modes.includes(round[i].mode))
+				if (round[i].mode !== this.specialMode && !modes.includes(round[i].mode))
 					modes.push(round[i].mode)
-				else if (round[i].mode !== 'TS') return false
+				else if (round[i].mode !== this.specialMode) return false
 			}
 
 			return true
@@ -193,8 +184,6 @@ export default {
 		generateBracket () {
 			this.generating = true
 			const res       = []
-			let usedMaps    = []
-			let usedModes   = []
 
 			for (let i = 0; i < this.nbRounds; i++) {
 				const nbGames   = i === this.nbRounds - 1
@@ -203,54 +192,13 @@ export default {
 				const thisRound = []
 
 				for (let j = 0; j < nbGames; j++) {
-					let arrayToPickFrom = JSON.parse(
-						JSON.stringify(
-							[1, 4, 6].includes(j)
-								? this.slayers
-								: this.objectives
-						)
-					).filter((g) => !usedMaps.includes(g.map))
+					const weighedArray = this._shuffle(this.getWeighedSelection(thisRound, j))
 
-					if (![1, 4, 6].includes(j))
-					{arrayToPickFrom = arrayToPickFrom.filter(
-						(g) => !usedModes.includes(g.mode)
-					)}
-
-					if (arrayToPickFrom.length < 1) {
-						// when we're stuck
-						usedMaps  = []
-						usedModes = []
-						for (let h = j - 1; h >= 0; h--) {
-							usedMaps.push(thisRound[h].map)
-
-							if (thisRound[h].mode !== 'TS')
-								usedModes.push(thisRound[h].mode)
-						}
-
-						arrayToPickFrom = JSON.parse(
-							JSON.stringify(
-								[1, 4, 6].includes(j)
-									? this.slayers
-									: this.objectives
-							)
-						).filter((g) => !usedMaps.includes(g.map))
-
-						if (![1, 4, 6].includes(j)) {
-							const check = arrayToPickFrom.filter(
-								(g) => !usedModes.includes(g.mode)
-							)
-							if (check.length > 0)
-								// doing that because sometimes we can run in an impossible pick
-								arrayToPickFrom = check
-						}
-					}
-
-					const game =
-						arrayToPickFrom[
-							Math.floor(Math.random() * arrayToPickFrom.length)
-						]
-					usedMaps.push(game.map)
-					if (![1, 4].includes(j)) usedModes.push(game.mode)
+					const game = weighedArray[
+						Math.floor(Math.random() * weighedArray.length)
+					]
+					this.usedMaps.push(game.map)
+					if (!this.tSGames.includes(j)) this.usedModes.push(game.mode)
 
 					thisRound.push(game)
 				}
@@ -268,13 +216,15 @@ export default {
 				}
 			})
 
-			this.generated  = res
+			this.generated  = JSON.parse(JSON.stringify(res))
+			this.usedMaps   = []
+			this.usedModes  = []
 			this.generating = false
 		},
 
 		getMapsForMode (mode) {
 			const arrayToPickFrom = JSON.parse(
-				JSON.stringify(mode === 'TS' ? this.slayers : this.objectives)
+				JSON.stringify(mode === this.specialMode ? this.slayers : this.objectives)
 			)
 
 			return arrayToPickFrom
@@ -308,10 +258,51 @@ export default {
 			}
 		},
 
+		getWeighedSelection (thisRound, currentIndex, attempt = 0) {
+			let weighedArray = []
+			if (this.tSGames.includes(currentIndex)) { // slayer
+				this.slayers.filter(o =>
+					!this.usedMaps.includes(o.map)
+				).forEach(c => {
+					const mapWeight =
+						Math.round(1 + (this.mapsWithCount.find(o => o.name === c.map).count / this.mapsWithCount.length))
+					weighedArray.push(...new Array(mapWeight).fill(c))
+				})
+			} else {
+				this.objectives.filter(o =>
+					!this.usedMaps.includes(o.map) && !this.usedModes.includes(o.mode)
+				).forEach(c => {
+					const mapWeight =
+						Math.round(1 + (this.mapsWithCount.find(o => o.name === c.map).count / this.mapsWithCount.length)) +
+						Math.round(1 + (this.modesWithCount.find(o => o.name === c.mode).count / this.modesWithCount.length))
+					weighedArray.push(...new Array(mapWeight).fill(c))
+				})
+			}
+
+			if (weighedArray.length < 1 && attempt < 1) { // when we're stuck
+				this.usedMaps  = []
+				this.usedModes = []
+				for (let h = currentIndex - 1; h >= 0; h--) {
+					this.usedMaps.push(thisRound[h].map)
+
+					if (thisRound[h].mode !== this.specialMode)
+						this.usedModes.push(thisRound[h].mode)
+				}
+
+				weighedArray = this.getWeighedSelection(thisRound, currentIndex, 1)
+			} else if (weighedArray.length < 1 && attempt > 0) {
+				this.usedMaps  = []
+				this.usedModes = []
+				weighedArray   = this.getWeighedSelection(thisRound, currentIndex)
+			}
+
+			return weighedArray
+		},
+
 		setMap (roundIndex, gameIndex, value) {
 			let arrayToPickFrom = JSON.parse(
 				JSON.stringify(
-					[1, 4, 6].includes(gameIndex)
+					this.tSGames.includes(gameIndex)
 						? this.slayers
 						: this.objectives
 				)
@@ -350,7 +341,7 @@ export default {
 		setMode (roundIndex, gameIndex, value) {
 			let arrayToPickFrom = JSON.parse(
 				JSON.stringify(
-					[1, 4, 6].includes(gameIndex)
+					this.tSGames.includes(gameIndex)
 						? this.slayers
 						: this.objectives
 				)
@@ -385,6 +376,26 @@ export default {
 			}
 
 			this.$set(this.generated[roundIndex][gameIndex], 'mode', value)
+		},
+
+		// https://stackoverflow.com/a/2450976
+		_shuffle (array) {
+			let currentIndex = array.length
+			let randomIndex
+
+			// While there remain elements to shuffle.
+			while (currentIndex !== 0) {
+			  // Pick a remaining element.
+			  randomIndex = Math.floor(Math.random() * currentIndex)
+			  currentIndex--
+
+			  // And swap it with the current element.
+			  [array[currentIndex], array[randomIndex]] = [
+					array[randomIndex], array[currentIndex]
+				]
+			}
+
+			return array
 		}
 	}
 }

@@ -47,7 +47,9 @@ export default {
 	css: [{ src: '~assets/styles/main.scss', lang: 'scss' }],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-	plugins: [],
+	plugins: [
+		{ mode: 'client', src: '~plugins/notifications' }
+	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
 	components: false,
