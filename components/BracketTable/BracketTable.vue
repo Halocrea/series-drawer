@@ -56,6 +56,13 @@
 		</div>
 		<div class="w-full flex justify-end items-center gap-2 mb-4">
 			<d-button
+				size="sm"
+				title="regenerate"
+				@click="takeScreenshot"
+			>
+				<svg-icon name="camera" class="w-4 h-4" />
+			</d-button>
+			<d-button
 				variant="warning"
 				size="sm"
 				title="regenerate"
@@ -75,7 +82,7 @@
 				:rounds="generated"
 			/>
 		</div>
-		<table class="c-bracket-table">
+		<table :ref="`printable`" class="c-bracket-table">
 			<thead>
 				<tr>
 					<th colspan="2" />

@@ -378,6 +378,16 @@ export default {
 			this.$set(this.generated[roundIndex][gameIndex], 'mode', value)
 		},
 
+		async takeScreenshot () {
+			const res = await this.$html2canvas(this.$refs.printable, { type: 'dataURL' })
+			const a   = document.createElement('a')
+			a.setAttribute('href', res)
+			a.setAttribute('download', `screenshot-${new Date().toLocaleDateString()}_${new Date().getTime()}.jpeg`)
+			document.body.appendChild(a)
+			a.click()
+			document.body.removeChild(a)
+		},
+
 		// https://stackoverflow.com/a/2450976
 		_shuffle (array) {
 			let currentIndex = array.length
