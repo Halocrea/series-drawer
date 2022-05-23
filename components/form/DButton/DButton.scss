@@ -1,0 +1,81 @@
+@import '~/assets/styles/utils/mixins';
+
+.d-button {
+	@apply inline-block relative border-2 border-transparent overflow-hidden outline-none;
+
+	&.normal {
+		@apply bg-gray-400 dark:bg-gray-600;
+	}
+	&.danger {
+		@apply bg-red-600 text-white;
+	}
+	&.primary {
+		@apply bg-blue-600 text-white;
+	}
+	&.transparent {
+		@apply bg-transparent;
+	}
+	&.secondary {
+		@apply bg-purple-600 text-white;
+	}
+	&.success {
+		@apply bg-green-600 text-white;
+	}
+	&.warning {
+		@apply bg-yellow-600 text-white;
+	}
+	&:not(.transparent) {
+		@apply uppercase shadow-lg;
+	}
+
+	&.xs {
+		@apply p-1 text-xs  rounded-sm;
+	}
+	&.sm {
+		@apply px-4 py-2 text-sm rounded-md;
+	}
+	&.md {
+		@apply px-4 py-2 text-base rounded-md;
+	}
+	&.lg {
+		@apply px-6 py-3 text-xl rounded-lg;
+	}
+	&.xl {
+		@apply px-8 py-4 text-2xl rounded-lg;
+	}
+
+	& > * {
+		z-index: 2;
+	}
+
+	&:disabled {
+		@apply cursor-not-allowed;
+
+		@include disabled-stripped-bg;
+	}
+
+	&::before {
+		@apply absolute top-0 left-0 w-full h-full opacity-10;
+		content: '';
+	}
+
+	&:not(:disabled) {
+		@apply cursor-pointer;
+
+		&:hover::before {
+			@apply bg-white;
+		}
+
+		&:focus {
+			@apply border-blue-500;
+		}
+
+		&:active {
+			transform: scale(0.95);
+
+			&::before {
+				@apply bg-black;
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+@import './../fields';
+
+.d-textarea {
+	@include field-base;
+
+	&__wrapper > label {
+		@apply top-1;
+
+		transform: translate3d(0, 22px, 0);
+	}
+}

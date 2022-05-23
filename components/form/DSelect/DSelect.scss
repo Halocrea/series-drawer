@@ -1,0 +1,12 @@
+@import './../fields';
+
+.d-select {
+	@include field-base;
+
+	&__wrapper {
+		& > .d-field__label {
+			@apply top-1;
+			transform: scale(0.8) translate3d(-8px, -50%, 0);
+		}
+	}
+}

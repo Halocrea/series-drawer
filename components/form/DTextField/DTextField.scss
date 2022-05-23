@@ -1,0 +1,5 @@
+@import './../fields';
+
+.d-text-field {
+	@include field-base;
+}

@@ -1,0 +1,75 @@
+@import '~/assets/styles/utils/mixins';
+
+.d-radio {
+	&__input {
+		@apply fixed top-0 left-0 pointer-events-none opacity-0;
+
+		&:not(:disabled) + .d-radio__label {
+			&:hover {
+				@apply bg-gray-100 dark:bg-gray-800;
+
+				&::before {
+					@apply bg-gray-300 dark:bg-gray-600;
+				}
+			}
+
+			&:active {
+				@apply bg-gray-200 dark:bg-gray-700;
+
+				&::before {
+					transform: scale(0.9);
+				}
+			}
+		}
+
+		&:disabled {
+			&:checked + .d-radio__label::after {
+				@apply bg-gray-500 dark:bg-gray-300;
+			}
+
+			& + .d-radio__label {
+				@apply italic text-gray-500 cursor-not-allowed;
+
+				&::before {
+					@apply border-gray-500;
+
+					@include disabled-stripped-bg;
+				}
+			}
+		}
+
+		&:checked + .d-radio__label::after {
+			transform: scale(0.7);
+		}
+	}
+
+	&__label {
+		@apply relative pl-10 pr-4 py-2 rounded-md cursor-pointer;
+
+		&::before,
+		&::after {
+			@apply absolute top-2 left-2 w-6 h-6 rounded-full;
+
+			content: '';
+		}
+
+		&::before {
+			@apply bg-gray-200 dark:bg-gray-700;
+		}
+
+		&::after {
+			@apply bg-blue-500;
+
+			transform: scale(0);
+			transition: transform 0.25s var(--transition-easing);
+		}
+	}
+
+	&__wrapper {
+		@apply relative;
+
+		&:focus-within > .d-radio__label::before {
+			box-shadow: 0 0 0 2px #3b82f6;
+		}
+	}
+}

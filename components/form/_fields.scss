@@ -1,0 +1,107 @@
+@import '~/assets/styles/utils/mixins';
+
+@mixin field-base {
+	&__error {
+		@apply absolute bottom-0 left-2 flex items-center text-xs;
+	}
+
+	&__input {
+		@apply relative w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 border-2 border-transparent outline-none;
+
+		&:not(:disabled) {
+			@apply text-black dark:text-white;
+
+			&:hover {
+				@apply bg-gray-200 dark:bg-gray-700;
+			}
+
+			&:active {
+				@apply bg-gray-300 dark:bg-gray-600 border-transparent;
+			}
+
+			&:focus {
+				@apply border-blue-500;
+			}
+		}
+
+		&:not(.rounded-full) {
+			@apply rounded-md;
+		}
+
+		&.rounded-full {
+			& + label,
+			& + .d-field__label {
+				@apply pl-2;
+			}
+		}
+
+		&:focus + label,
+		&:not(:placeholder-shown) + label {
+			@apply top-1;
+			transform: scale(0.8) translate3d(-8px, -50%, 0);
+		}
+
+		&:disabled {
+			@apply bg-gray-200 dark:bg-gray-700 cursor-not-allowed;
+			@include disabled-stripped-bg;
+
+			&,
+			& + label,
+			& + .d-field__label {
+				@apply text-gray-100 italic cursor-not-allowed;
+			}
+		}
+
+		&--with-prefix,
+		&--with-prefix.rounded-full {
+			@apply pl-10;
+
+			& + label,
+			& + .d-field__label {
+				@apply pl-6;
+			}
+		}
+		&--with-suffix,
+		&--with-prefix.rounded-full {
+			@apply pr-10;
+
+			& + label,
+			& + .d-field__label {
+				@apply pr-11;
+			}
+		}
+	}
+
+	&__prefix,
+	&__suffix {
+		@apply absolute top-1/2 pointer-events-none;
+		transform: translateY(-50%);
+	}
+	&__prefix {
+		@apply left-4;
+	}
+	&__suffix {
+		@apply right-4;
+	}
+
+	&__wrapper {
+		@apply block relative box-border px-1 py-4 my-2 overflow-hidden;
+
+		&--error {
+			@apply text-red-500;
+
+			& > .d-text-field__input {
+				@apply border-red-500;
+			}
+		}
+
+		& > label,
+		& > .d-field__label {
+			@apply box-border absolute top-1/2 left-4 w-auto origin-top-left overflow-hidden cursor-pointer whitespace-nowrap overflow-ellipsis;
+			max-width: calc(100% - 1.4rem);
+			transform: translate3d(0, -50%, 0);
+			transition: transform 0.25s var(--transition-easing),
+				top 0.25s var(--transition-easing);
+		}
+	}
+}

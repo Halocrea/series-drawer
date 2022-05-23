@@ -1,0 +1,79 @@
+/* These are utility classes to use with the <transition /> Vue built-in component.
+ *
+ * Usage:
+ * <transition name="d-transition--horizontal" mode="out-in">
+ * 		<div v-if="somethingIsTrue">Something</div>
+ * </transition>
+ *
+ */
+
+.d-transition {
+	&--horizontal,
+	&--vertical {
+		&-enter-active,
+		&-leave-active {
+			transition: opacity 0.2s linear,
+				transform 0.2s var(--transition-easing);
+		}
+		&-enter {
+			opacity: 0;
+		}
+		&-leave-to {
+			opacity: 0;
+		}
+	}
+
+	&--horizontal {
+		&-enter {
+			transform: translate3d(10px, 0, 0);
+		}
+		&-leave-to {
+			transform: translate3d(-10px, 0, 0);
+		}
+	}
+
+	&--fade {
+		&-enter-active,
+		&-leave-active {
+			transition: opacity 0.15s linear;
+		}
+		&-enter,
+		&-leave-to {
+			opacity: 0 !important;
+		}
+	}
+
+	&--vertical {
+		&-enter {
+			transform: translate3d(0, -10px, 0);
+		}
+		&-leave-to {
+			transform: translate3d(0, 10px, 0);
+		}
+	}
+
+	&--zoom {
+		&-enter-active,
+		&-leave-active {
+			transition: opacity 0.15s linear,
+				transform 0.15s var(--transition-easing);
+		}
+
+		&-enter-active {
+			transition-delay: 0.05s, 0.05s;
+		}
+
+		&-enter,
+		&-leave-to {
+			opacity: 0;
+		}
+
+		&-enter {
+			transform: scale(0.95);
+		}
+
+		&-leave-to {
+			transform: scale(1.05);
+		}
+	}
+}

@@ -1,0 +1,11 @@
+.paginated-list {
+	.d-text-field {
+		&__input {
+			@apply py-1;
+		}
+
+		&__wrapper {
+			@apply relative mt-0 -mb-6 -top-4;
+		}
+	}
+}

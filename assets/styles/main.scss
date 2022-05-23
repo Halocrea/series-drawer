@@ -1,0 +1,10 @@
+/* this is a global style file that is imported for the whole project (in nuxt.config.js);
+ * do NOT put specific CSS in this file
+ */
+
+@import './global/variables';
+@import './global/transitions';
+
+body {
+	@apply w-screen h-screen overflow-hidden;
+}
