@@ -7,7 +7,7 @@ export default {
 
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
-		title    : 'HaloCréa - Draw series for tournament (HCS settings)',
+		title    : 'HaloCrea - Draw series for tournament (HCS settings)',
 		htmlAttrs: {
 			lang: 'en'
 		},
