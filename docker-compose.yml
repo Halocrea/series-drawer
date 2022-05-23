@@ -19,7 +19,7 @@ services:
       - "traefik.http.routers.seriesdrawer-secure.rule=Host(`${DOMAIN_NAME}`)"
       - "traefik.http.routers.seriesdrawer-secure.tls=true"
       - "traefik.http.routers.seriesdrawer-secure.tls.certresolver=http"
-      - "traefik.http.services.seriesdrawer.loadbalancer.server.port=${NODE_PORT}"
+      - "traefik.http.services.seriesdrawer.loadbalancer.server.port=80"
     networks:
       - proxy
 
