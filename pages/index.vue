@@ -51,14 +51,14 @@
 				<br >
 				Licensed under
 				<a
-					href=""
+					href="https://raw.githubusercontent.com/Halocrea/series-drawer/main/LICENSE?token=GHSAT0AAAAAABU3CEWT7IWKSEISA3HOMZR6YULLCBQ"
 					target="_blank"
 					class="underline text-blue-400 hover:text-blue-100"
 				>GNU GPLv3</a
 				>
 				| Download the source
 				<a
-					href=""
+					href="https://github.com/Halocrea/series-drawer"
 					target="_blank"
 					class="underline text-blue-400 hover:text-blue-100"
 				>here</a
