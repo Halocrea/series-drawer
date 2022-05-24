@@ -1,15 +1,5 @@
 <template>
 	<div class="d-import-csv">
-		<d-button
-			variant="success"
-			@click="() => openModal = true"
-		>
-			<svg-icon
-				name="file-text"
-				class="w-3 h-3 mr-2"
-			/>
-			<span>IMPORT CSV</span>
-		</d-button>
 		<d-modal :open="openModal" @close="() => (openModal = false)">
 			<template #title>
 				<h3 class="py-2 text-xl uppercase">Import CSV File</h3>
@@ -59,6 +49,7 @@
 					<div class="w-full text-center">
 						Select file
 					</div>
+					<div class="d-button__hover" />
 				</label>
 				<div class="mb-4">
 					<d-check
@@ -79,7 +70,8 @@
 @import '~/assets/styles/utils/mixins';
 .d-import-csv {
 	.upload-btn {
-		@apply inline-block relative w-full mt-8 mb-4 px-4 py-2 text-base rounded-md border-2 border-transparent overflow-hidden outline-none bg-green-600 text-white;
+		@apply inline-block relative w-full mt-8 mb-4 px-4 py-2 border border-transparent outline-none border-gray-400;
+		box-shadow: 0 0 30px 0 rgba(16, 185, 129, .25) inset;
 
 		&:disabled {
 			@apply cursor-not-allowed;
@@ -87,29 +79,62 @@
 			@include disabled-stripped-bg;
 		}
 
+		&::before,
+		&::after {
+			@apply absolute h-2 border-l border-r border-gray-400 pointer-events-none;
+
+			content: "";
+			left: -4px;
+			width: calc(100% + 8px);
+			transition: top .1s var(--transition-easing),
+			            left .1s var(--transition-easing),
+			            bottom .1s var(--transition-easing),
+			            width .1s var(--transition-easing),
+						opacity .1s linear;
+		}
+
 		&::before {
-			@apply absolute top-0 left-0 w-full h-full opacity-10;
-			content: '';
+			@apply border-t opacity-80;
+			top: -5px;
+		}
+
+		&::after {
+			@apply border-green-500 border-l-2 border-r-2 border-b-2;
+			bottom: -5px;
 		}
 
 		&:not(:disabled) {
 			@apply cursor-pointer;
 
-			&:hover::before {
-				@apply bg-white;
-			}
+			&:hover {
+				&::before,
+				&::after {
+					@apply left-0 w-full opacity-0;
+				}
+				&::before {
+					@apply top-0;
+				}
+				&::after {
+					@apply bottom-0;
+				}
 
-			&:focus {
-				@apply border-blue-500;
+				.d-button__hover {
+					@apply h-full;
+					transition: height .2s var(--transition-easing);
+				}
 			}
 
 			&:active {
-				transform: scale(0.95);
-
-				&::before {
-					@apply bg-black;
-				}
+				transform: scale(.95);
 			}
+		}
+
+		.d-button__hover {
+			@apply absolute top-1/2 left-0 w-full h-0 bg-white pointer-events-none;
+
+			mix-blend-mode: difference;
+			transform: translate3d(0, -50%, 0);
+			transition: height .08s linear;
 		}
 
 		input[type="file"] {
@@ -117,7 +142,7 @@
 		}
 	}
 	.example {
-		@apply p-1 font-mono bg-gray-200;
+		@apply p-2 font-mono bg-gray-900;
 	}
 }
 </style>

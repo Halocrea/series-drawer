@@ -1,14 +1,45 @@
+
 .c-bracket-table {
 	@apply table-fixed border-collapse;
 
+	&.taking-screenshot {
+		@apply bg-gray-900;
+
+		th,
+		td {
+			&:not(:first-child) {
+				@apply border-white;
+			}
+		}
+		td {
+			&[data-setting='TS'] {
+				@apply bg-red-600 shadow-none;
+			}
+			&[data-setting='CTF'] {
+				@apply bg-blue-500 shadow-none;
+			}
+			&[data-setting='KotH'] {
+				@apply bg-purple-500 shadow-none;
+			}
+			&[data-setting='OB'] {
+				@apply bg-green-500 shadow-none;
+			}
+			&[data-setting='SH'] {
+				@apply bg-yellow-500 shadow-none;
+			}
+		}
+	}
+
 	th:not(:first-child),
 	td:nth-child(2) {
-		@apply px-4 py-2 font-bold bg-gray-600 text-white;
+		@apply px-4 py-2 font-bold bg-gray-700;
 	}
 
 	th,
 	td {
-		@apply border border-white;
+		&:not(:first-child) {
+			@apply text-white border border-gray-500;
+		}
 	}
 
 	td:first-child {
@@ -16,10 +47,9 @@
 	}
 
 	td[data-setting=''] {
-		@apply bg-gray-400 border-gray-400;
-
+		@apply bg-black bg-opacity-40 border-0;
 		&:last-child {
-			@apply border-r-white;
+			@apply border-r border-r-gray-500;
 		}
 	}
 
@@ -27,19 +57,19 @@
 		transition: background-color 0.15s;
 
 		&[data-setting='TS'] {
-			@apply bg-red-200;
+			box-shadow: 0 0 30px 0 rgba(239, 68, 68, .35) inset;
 		}
 		&[data-setting='CTF'] {
-			@apply bg-blue-200;
+			box-shadow: 0 0 30px 0 rgba(59, 130, 246, .25) inset;
 		}
 		&[data-setting='KotH'] {
-			@apply bg-purple-200;
+			box-shadow: 0 0 30px 0 rgba(139, 92, 246, .25) inset;
 		}
 		&[data-setting='OB'] {
-			@apply bg-green-200;
+			box-shadow: 0 0 30px 0 rgba(16, 185, 129, .25) inset;
 		}
 		&[data-setting='SH'] {
-			@apply bg-yellow-200;
+			box-shadow: 0 0 30px rgba(245, 158, 11, .25) inset;
 		}
 
 		&.highlighted {
@@ -71,7 +101,7 @@
 
 			&.wrong {
 				& > select:not(:focus) {
-					@apply text-red-600;
+					@apply text-red-500;
 				}
 			}
 		}
@@ -79,8 +109,13 @@
 		&__input {
 			@apply bg-transparent appearance-none px-1;
 
-			&:not(:disabled):hover {
-				@apply bg-white bg-opacity-30 cursor-pointer;
+			&:not(:disabled) {
+				&:hover {
+					@apply bg-white bg-opacity-30 cursor-pointer;
+				}
+				&:focus {
+					@apply bg-black bg-opacity-80 cursor-pointer;
+				}
 			}
 
 			& > option {

@@ -32,6 +32,12 @@ export default {
 		})
 	},
 
+	mounted () {
+		this.$root.$on('open-import-modal', () => {
+			this.openModal = true
+		})
+	},
+
 	methods: {
 		guessBracketType (roundName) {
 			let matchIdx = Object.values(roundPrefixes).find(v => roundName.startsWith(v))

@@ -2,7 +2,7 @@
 	<nuxt-link
 		v-if="to.length > 0 || typeof to === 'object'"
 		ref="dButton"
-		:class="`d-button ${size} ${variant} ${additionnalClasses}`"
+		:class="`d-button ${size} ${variant} ${additionnalClasses} shadow-text`"
 		:to="to"
 		:disabled="disabled"
 		tabindex="0"
@@ -11,6 +11,7 @@
 		<div class="relative flex items-center">
 			<slot />
 		</div>
+		<div class="d-button__hover" />
 	</nuxt-link>
 	<a
 		v-else-if="href.length > 0"
@@ -25,6 +26,7 @@
 		<div class="relative flex items-center">
 			<slot />
 		</div>
+		<div class="d-button__hover" />
 	</a>
 	<button
 		v-else
@@ -38,6 +40,7 @@
 		<div class="relative flex items-center">
 			<slot />
 		</div>
+		<div class="d-button__hover" />
 	</button>
 </template>
 

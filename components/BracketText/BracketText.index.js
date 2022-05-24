@@ -16,24 +16,10 @@ export default {
 		DTextarea
 	},
 
-	props: {
-		bracketType: {
-			type     : Number,
-			required : true,
-			validator: (val) =>
-				Object.values(BRACKET_TYPES)
-					.map((bt) => bt.index)
-					.includes(val)
-		},
-
-		rounds: {
-			type    : Array,
-			required: true
-		}
-	},
-
 	data: () => ({
-		openModal: false
+		bracketType: -1,
+		openModal  : false,
+		rounds     : []
 	}),
 
 	computed: {
@@ -57,7 +43,19 @@ export default {
 		}
 	},
 
+	mounted () {
+		this.$root.$on('export-bracket-txt', ({ bracketType, rounds }) => {
+			this.bracketType = bracketType
+			this.rounds      = rounds
+		})
+	},
+
 	methods: {
+		close () {
+			this.bracketType = -1
+			this.rounds      = []
+		},
+
 		getRoundName (index) {
 			switch (this.bracketType) {
 				case BRACKET_TYPES.GRAND_FINALS.index:

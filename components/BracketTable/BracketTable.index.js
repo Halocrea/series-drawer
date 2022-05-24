@@ -1,6 +1,4 @@
 import { mapGetters } from 'vuex'
-import BracketArbiter from '~/components/BracketArbiter/BracketArbiter.vue'
-import BracketText    from '~/components/BracketText/BracketText.vue'
 import DButton        from '~/components/form/DButton/DButton.vue'
 import DSelect        from '~/components/form/DSelect/DSelect.vue'
 
@@ -11,8 +9,6 @@ import BRACKET_TYPES, {
 
 export default {
 	components: {
-		BracketArbiter,
-		BracketText,
 		DButton,
 		DSelect
 	},

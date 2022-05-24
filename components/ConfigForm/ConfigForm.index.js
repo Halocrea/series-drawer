@@ -1,7 +1,6 @@
 import DButton    from '~/components/form/DButton/DButton.vue'
 import DSelect    from '~/components/form/DSelect/DSelect.vue'
 import DTextField from '~/components/form/DTextField/DTextField.vue'
-import ImportCsv  from '~/components/ImportCsv/ImportCsv.vue'
 
 import BRACKET_TYPES from '~/utils/bracketTypes'
 
@@ -9,8 +8,7 @@ export default {
 	components: {
 		DButton,
 		DSelect,
-		DTextField,
-		ImportCsv
+		DTextField
 	},
 
 	data: () => ({
@@ -41,7 +39,7 @@ export default {
 		},
 
 		canSubmit () {
-			return this.nbRounds > 0 && this.nbGamesFinals >= this.nbGamesNormal
+			return this.nbRounds > 0 && this.nbGamesFinals >= this.nbGamesNormal && this.nbGamesNormal > 0 && this.nbGamesFinals > 0
 		}
 	},
 

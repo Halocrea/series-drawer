@@ -6,26 +6,22 @@
 	}
 
 	&__input {
-		@apply relative w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 border-2 border-transparent outline-none;
+		@apply relative w-full px-4 py-2 bg-black bg-opacity-80 border-2 border-transparent outline-none;
 
 		&:not(:disabled) {
-			@apply text-black dark:text-white;
+			@apply text-white;
 
 			&:hover {
-				@apply bg-gray-200 dark:bg-gray-700;
+				@apply bg-opacity-70;
 			}
 
 			&:active {
-				@apply bg-gray-300 dark:bg-gray-600 border-transparent;
+				@apply bg-opacity-100 border-transparent;
 			}
 
 			&:focus {
 				@apply border-blue-500;
 			}
-		}
-
-		&:not(.rounded-full) {
-			@apply rounded-md;
 		}
 
 		&.rounded-full {
@@ -42,13 +38,13 @@
 		}
 
 		&:disabled {
-			@apply bg-gray-200 dark:bg-gray-700 cursor-not-allowed;
+			@apply bg-gray-900 cursor-not-allowed;
 			@include disabled-stripped-bg;
 
 			&,
 			& + label,
 			& + .d-field__label {
-				@apply text-gray-100 italic cursor-not-allowed;
+				@apply text-gray-300 italic cursor-not-allowed;
 			}
 		}
 

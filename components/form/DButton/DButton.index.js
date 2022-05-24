@@ -50,7 +50,8 @@ export default {
 					'success',
 					'transparent',
 					'warning',
-					'danger'
+					'danger',
+					'simple'
 				].includes(v)
 		}
 	},

@@ -1,7 +1,9 @@
-import DButton from '~/components/form/DButton/DButton.vue'
+import ContentBox from '~/components/layout/ContentBox.vue'
+import DButton    from '~/components/form/DButton/DButton.vue'
 
 export default {
 	components: {
+		ContentBox,
 		DButton
 	},
 

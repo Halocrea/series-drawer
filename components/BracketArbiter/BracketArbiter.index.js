@@ -16,22 +16,6 @@ export default {
 		DTextarea
 	},
 
-	props: {
-		bracketType: {
-			type     : Number,
-			required : true,
-			validator: (val) =>
-				Object.values(BRACKET_TYPES)
-					.map((bt) => bt.index)
-					.includes(val)
-		},
-
-		rounds: {
-			type    : Array,
-			required: true
-		}
-	},
-
 	data: () => ({
 		baseGameObj: {
 			mapId        : '',
@@ -45,7 +29,8 @@ export default {
 			seriesId: '0000000002',
 			rounds  : []
 		},
-		mapIds: [
+		bracketType: -1,
+		mapIds     : [
 			{ name: 'Aquarius', id: 'cjZd6R3zR1' },
 			{ name: 'Bazaar', id: '7Yx0939r1' },
 			{ name: 'Catalyst', id: 'sc-yRazeo2' },
@@ -60,7 +45,8 @@ export default {
 			{ name: 'SH', id: 'FmzPtTcUfq' },
 			{ name: 'TS', id: 'O7zx8gRQA' }
 		],
-		openModal: false
+		openModal: false,
+		rounds   : []
 	}),
 
 	computed: {
@@ -103,7 +89,19 @@ export default {
 		}
 	},
 
+	mounted () {
+		this.$root.$on('export-bracket-arbiter', ({ bracketType, rounds }) => {
+			this.bracketType = bracketType
+			this.rounds      = rounds
+		})
+	},
+
 	methods: {
+		close () {
+			this.bracketType = -1
+			this.rounds      = []
+		},
+
 		getRoundName (index) {
 			switch (this.bracketType) {
 				case BRACKET_TYPES.GRAND_FINALS.index:

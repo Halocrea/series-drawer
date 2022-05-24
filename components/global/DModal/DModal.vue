@@ -7,7 +7,7 @@
 			@click="(e) => onClose(overlayClose, e)"
 		>
 			<transition name="d-transition--vertical" mode="out-in">
-				<div
+				<content-box
 					v-show="showModal"
 					class="d-modal__modal js-prevent-modal-close"
 				>
@@ -18,6 +18,7 @@
 					<div class="flex justify-between items-center pt-2">
 						<div>
 							<d-button
+								variant="simple"
 								type="button"
 								tabindex="-1"
 								@click="() => onClose()"
@@ -29,7 +30,7 @@
 							<slot name="actions" />
 						</div>
 					</div>
-				</div>
+				</content-box>
 			</transition>
 		</div>
 	</transition>

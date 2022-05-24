@@ -1,10 +1,6 @@
 <template>
 	<div class="c-bracket-arbiter-export">
-		<d-button variant="primary" size="sm" @click="() => (openModal = true)">
-			<svg-icon name="download" class="w-4 h-4 mr-2" />
-			ARBITER
-		</d-button>
-		<d-modal :open="openModal" @close="() => (openModal = false)">
+		<d-modal :open="rounds.length > 0 && bracketType >= 0" @close="close">
 			<template #title>
 				<div class="flex justify-between items-center">
 					<h3 class="py-2 text-xl uppercase">Generated JSON</h3>

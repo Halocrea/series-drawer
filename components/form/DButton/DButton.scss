@@ -1,47 +1,26 @@
 @import '~/assets/styles/utils/mixins';
 
 .d-button {
-	@apply inline-block relative border-2 border-transparent overflow-hidden outline-none;
+	@apply inline-block relative m-2 border border-transparent outline-none border-gray-400;
 
 	&.normal {
-		@apply bg-gray-400 dark:bg-gray-600;
-	}
-	&.danger {
-		@apply bg-red-600 text-white;
-	}
-	&.primary {
-		@apply bg-blue-600 text-white;
-	}
-	&.transparent {
-		@apply bg-transparent;
-	}
-	&.secondary {
-		@apply bg-purple-600 text-white;
-	}
-	&.success {
-		@apply bg-green-600 text-white;
-	}
-	&.warning {
-		@apply bg-yellow-600 text-white;
-	}
-	&:not(.transparent) {
-		@apply uppercase shadow-lg;
+		@apply bg-black bg-opacity-80;
 	}
 
 	&.xs {
-		@apply p-1 text-xs  rounded-sm;
+		@apply p-1 text-xs;
 	}
 	&.sm {
-		@apply px-4 py-2 text-sm rounded-md;
+		@apply px-4 py-2 text-sm;
 	}
 	&.md {
-		@apply px-4 py-2 text-base rounded-md;
+		@apply px-4 py-2 text-base;
 	}
 	&.lg {
-		@apply px-6 py-3 text-xl rounded-lg;
+		@apply px-6 py-3 text-xl;
 	}
 	&.xl {
-		@apply px-8 py-4 text-2xl rounded-lg;
+		@apply px-8 py-4 text-2xl;
 	}
 
 	& > * {
@@ -54,28 +33,114 @@
 		@include disabled-stripped-bg;
 	}
 
-	&::before {
-		@apply absolute top-0 left-0 w-full h-full opacity-10;
-		content: '';
+	&:not(.simple) {
+		&::before,
+		&::after {
+			@apply absolute h-2 border-l border-r border-gray-400 pointer-events-none;
+
+			content: "";
+			left: -4px;
+			width: calc(100% + 8px);
+			transition: top .1s var(--transition-easing),
+			            left .1s var(--transition-easing),
+			            bottom .1s var(--transition-easing),
+			            width .1s var(--transition-easing),
+						opacity .1s linear;
+		}
+
+		&::before {
+			@apply border-t opacity-80;
+			top: -5px;
+		}
+
+		&::after {
+			@apply border-b;
+			bottom: -5px;
+		}
 	}
+
+	&.danger,
+	&.primary,
+	&.secondary,
+	&.success,
+	&.warning {
+		&::after {
+			@apply border-l-2 border-r-2 border-b-2;
+		}
+	}
+	&.danger {
+		&::after {
+			@apply border-red-500;
+		}
+		// @apply bg-red-600 text-white;
+		box-shadow: 0 0 30px 0 rgba(239, 68, 68, .25) inset;
+	}
+	&.primary {
+		&::after {
+			@apply border-blue-500;
+		}
+		// @apply bg-blue-600 text-white;
+		box-shadow: 0 0 30px 0 rgba(59, 130, 246, .25) inset;
+	}
+	&.transparent {
+		@apply bg-transparent;
+	}
+	&.secondary {
+		&::after {
+			@apply border-purple-500;
+		}
+		// @apply bg-purple-600 text-white;
+	}
+	&.success {
+		&::after {
+			@apply border-green-500;
+		}
+		box-shadow: 0 0 30px 0 rgba(16, 185, 129, .25) inset;
+		// @apply bg-green-600 text-white;
+	}
+	&.warning {
+		&::after {
+			@apply border-yellow-500;
+		}
+		box-shadow: 0 0 30px rgba(245, 158, 11, .25) inset;
+		// @apply bg-yellow-600 text-white;
+	}
+	&:not(.transparent) {
+		@apply uppercase;
+	}
+
 
 	&:not(:disabled) {
 		@apply cursor-pointer;
 
-		&:hover::before {
-			@apply bg-white;
-		}
+		&:hover {
+			&::before,
+			&::after {
+				@apply left-0 w-full opacity-0;
+			}
+			&::before {
+				@apply top-0;
+			}
+			&::after {
+				@apply bottom-0;
+			}
 
-		&:focus {
-			@apply border-blue-500;
+			.d-button__hover {
+				@apply h-full;
+				transition: height .2s var(--transition-easing);
+			}
 		}
 
 		&:active {
-			transform: scale(0.95);
-
-			&::before {
-				@apply bg-black;
-			}
+			transform: scale(.95);
 		}
+	}
+
+	&__hover {
+		@apply absolute top-1/2 left-0 w-full h-0 bg-white pointer-events-none;
+
+		mix-blend-mode: difference;
+		transform: translate3d(0, -50%, 0);
+		transition: height .08s linear;
 	}
 }

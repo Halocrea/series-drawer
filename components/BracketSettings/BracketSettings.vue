@@ -20,6 +20,7 @@
 		</div>
 		<div class="w-full flex justify-between items-center mb-4 px-4">
 			<d-button
+				variant="simple"
 				@click="$emit('close')"
 			>
 				Cancel
@@ -100,6 +101,7 @@
 		</div>
 		<div class="w-full flex justify-between items-center mb-4">
 			<d-button
+				variant="simple"
 				@click="$emit('close')"
 			>
 				Cancel
@@ -193,6 +195,7 @@
 			<d-button
 				@click="$emit('close')"
 			>
+				variant="simple"
 				Cancel
 			</d-button>
 			<d-button

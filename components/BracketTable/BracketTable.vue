@@ -2,22 +2,22 @@
 	<div class="w-full">
 		<div class="mb-4">
 			<div class="flex items-center">
-				<div class="w-24 font-bold text-right">Map count:</div>
+				<div class="w-24 font-bold text-right shadow-text mr-2">Map count:</div>
 				<div
 					v-for="(m, i) in getMapStats"
 					:key="`map-${i}`"
 					:class="{
-						'm-1 p-1 border border-gray-200': true,
-						'bg-yellow-100':
+						'm-1 p-1 bg-opacity-30 shadow-text': true,
+						'bg-yellow-300':
 							mapCountAvg - m.count === 1 ||
 							mapCountAvg - m.count === -1,
-						'bg-yellow-300':
+						'bg-yellow-500':
 							mapCountAvg - m.count === 2 ||
 							mapCountAvg - m.count === -2,
-						'bg-red-300':
+						'bg-red-400':
 							mapCountAvg - m.count === 3 ||
 							mapCountAvg - m.count === -3,
-						'bg-red-500 text-white':
+						'bg-red-500 bg-opacity-60':
 							mapCountAvg - m.count > 3 ||
 							mapCountAvg - m.count < -3,
 					}"
@@ -28,22 +28,22 @@
 				</div>
 			</div>
 			<div class="flex items-center">
-				<div class="w-24 font-bold text-right">Obj count:</div>
+				<div class="w-24 font-bold text-right shadow-text mr-2">Obj count:</div>
 				<div
 					v-for="(m, i) in getModeStats"
 					:key="`map-${i}`"
 					:class="{
-						'm-1 p-1 border border-gray-200': true,
-						'bg-yellow-100':
+						'm-1 p-1 bg-opacity-30 shadow-text': true,
+						'bg-yellow-300':
 							modeCountAvg - m.count === 1 ||
 							modeCountAvg - m.count === -1,
-						'bg-yellow-300':
+						'bg-yellow-500':
 							modeCountAvg - m.count === 2 ||
 							modeCountAvg - m.count === -2,
-						'bg-red-300':
+						'bg-red-400':
 							modeCountAvg - m.count === 3 ||
 							modeCountAvg - m.count === -3,
-						'bg-red-500 text-white':
+						'bg-red-500 bg-opacity-60':
 							modeCountAvg - m.count > 3 ||
 							modeCountAvg - m.count < -3,
 					}"
@@ -57,13 +57,14 @@
 		<div class="w-full flex justify-end items-center gap-2 mb-4">
 			<d-button
 				size="sm"
+				variant="primary"
 				title="regenerate"
 				@click="takeScreenshot"
 			>
 				<svg-icon name="camera" class="w-4 h-4" />
 			</d-button>
 			<d-button
-				variant="warning"
+				variant="simple"
 				size="sm"
 				title="regenerate"
 				@click="generateBracket"
@@ -71,22 +72,39 @@
 				<svg-icon name="refresh-cw" class="w-4 h-4 mr-2" />
 				REGEN
 			</d-button>
-			<bracket-arbiter
-				v-if="generated"
-				:bracket-type="bracketType"
-				:rounds="generated"
-			/>
-			<bracket-text
-				v-if="generated"
-				:bracket-type="bracketType"
-				:rounds="generated"
-			/>
+			<d-button
+				variant="simple"
+				size="sm"
+				@click="() => {
+					$root.$emit('export-bracket-txt', {
+						bracketType,
+						rounds: generated
+					})
+				}"
+			>
+				<svg-icon name="download" class="w-4 h-4 mr-2" />
+				TXT
+			</d-button>
+			<d-button
+				variant="simple"
+				size="sm"
+				@click="() => {
+					$root.$emit('export-bracket-arbiter', {
+						bracketType,
+						rounds: generated
+					})
+				}"
+			>
+				<svg-icon name="download" class="w-4 h-4 mr-2" />
+				ARBITER
+			</d-button>
 		</div>
 		<table
 			:ref="`printable`"
 			:class="{
 				'c-bracket-table': true,
-				'taking-screenshot': takingScreenshot
+				'taking-screenshot': takingScreenshot,
+				'shadow-text': !takingScreenshot
 			}"
 		>
 			<thead>
@@ -132,15 +150,6 @@
 								@change="v => setMode(index, idx, v)"
 							>
 								<option
-									class="text-center"
-									value="RAND"
-									@mousedown.stop="
-										() => setMode(index, idx, 'RAND')
-									"
-								>
-									🎲
-								</option>
-								<option
 									v-for="mode in allObjectives"
 									:key="`gamemode-${mode}`"
 									:selected="mode === game.mode"
@@ -167,15 +176,6 @@
 								"
 								@change="v => setMap(index, idx, v)"
 							>
-								<option
-									class="text-center"
-									value="RAND"
-									@mousedown.prevent="
-										() => setMode(index, idx, 'RAND')
-									"
-								>
-									🎲
-								</option>
 								<option
 									v-for="map in game.mode === 'TS'
 										? allSlayerMaps

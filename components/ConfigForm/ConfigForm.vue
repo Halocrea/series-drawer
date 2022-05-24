@@ -75,9 +75,16 @@
 			</div>
 		</transition>
 		<div class="m-4 flex justify-between items-center">
-			<import-csv
-				@csv-imported="({ type, data }) => $emit('csv-imported', { type, data })"
-			/>
+			<d-button
+				variant="success"
+				@click="() => $root.$emit('open-import-modal')"
+			>
+				<svg-icon
+					name="file-text"
+					class="w-3 h-3 mr-2"
+				/>
+				<span>IMPORT CSV</span>
+			</d-button>
 			<d-button variant="primary" type="submit" :disabled="!canSubmit">
 				Generate Bracket
 			</d-button>
