@@ -47,7 +47,6 @@ export default {
 
 	watch: {
 		selectedType (val) {
-			console.log(val)
 			if (val === this.types.GRAND_FINALS.index)
 				this.nbTeams = 2
 		}
