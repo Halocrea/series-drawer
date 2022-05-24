@@ -39,7 +39,7 @@ export default {
 				href : '/favicon-16x16.png'
 			},
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-			{ rel: 'manifest', href: '/site.manifest' }
+			{ rel: 'manifest', href: '/site.webmanifest' }
 		]
 	},
 
