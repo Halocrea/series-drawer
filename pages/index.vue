@@ -142,6 +142,7 @@ export default {
 		},
 
 		reset () {
+			this.importedCsv  = []
 			this.nbRounds     = -1
 			this.showSettings = false
 			this.type         = -1
