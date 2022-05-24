@@ -21,9 +21,9 @@ export default {
 }
 
 export const roundPrefixes = {
-	WINNERS_BRACKET: 'WB ',
-	LOSERS_BRACKET : 'LB ',
-	GRAND_FINALS   : 'Finals',
+	WINNERS_BRACKET: 'WR',
+	LOSERS_BRACKET : 'LR',
+	GRAND_FINALS   : 'GF',
 	POOL_PLAY      : 'Match '
 }
 

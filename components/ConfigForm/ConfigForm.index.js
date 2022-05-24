@@ -1,6 +1,7 @@
 import DButton    from '~/components/form/DButton/DButton.vue'
 import DSelect    from '~/components/form/DSelect/DSelect.vue'
 import DTextField from '~/components/form/DTextField/DTextField.vue'
+import ImportCsv  from '~/components/ImportCsv/ImportCsv.vue'
 
 import BRACKET_TYPES from '~/utils/bracketTypes'
 
@@ -8,7 +9,8 @@ export default {
 	components: {
 		DButton,
 		DSelect,
-		DTextField
+		DTextField,
+		ImportCsv
 	},
 
 	data: () => ({

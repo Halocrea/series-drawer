@@ -22,7 +22,7 @@
 							mapCountAvg - m.count < -3,
 					}"
 					@mouseenter="() => (highlightedMap = m.name)"
-					@mouseleave="() => (highlightedMap = '')"
+					@mouseleave="() => (highlightedMap = 'none')"
 				>
 					{{ m.name }}: {{ m.count }}
 				</div>
@@ -48,7 +48,7 @@
 							modeCountAvg - m.count < -3,
 					}"
 					@mouseenter="() => (highlightedMode = m.name)"
-					@mouseleave="() => (highlightedMode = '')"
+					@mouseleave="() => (highlightedMode = 'none')"
 				>
 					{{ m.name }}: {{ m.count }}
 				</div>
@@ -82,7 +82,13 @@
 				:rounds="generated"
 			/>
 		</div>
-		<table :ref="`printable`" class="c-bracket-table">
+		<table
+			:ref="`printable`"
+			:class="{
+				'c-bracket-table': true,
+				'taking-screenshot': takingScreenshot
+			}"
+		>
 			<thead>
 				<tr>
 					<th colspan="2" />
@@ -94,7 +100,7 @@
 			<tbody>
 				<tr v-for="(round, index) in generated" :key="`round-${index}`">
 					<td>
-						{{ checkMapsAndModes(round) ? '&nbsp;' : '⚠️' }}
+						{{ checkMapsAndModes(round) || takingScreenshot ? '&nbsp;' : '⚠️' }}
 					</td>
 					<td>{{ getRoundName(index) }}</td>
 					<td
@@ -107,10 +113,7 @@
 						}"
 						:data-setting="game.mode"
 					>
-						<template v-if="!game.map || !game.mode">
-							&nbsp;
-						</template>
-						<div v-else class="flex items-center">
+						<div class="flex items-center">
 							<span
 								v-if="game.mode === 'TS'"
 								class="px-2 cursor-not-allowed"
@@ -122,7 +125,7 @@
 								:value="game.mode"
 								:class="
 									round.filter((m) => m.mode === game.mode)
-										.length > 1
+										.length > 1 && !takingScreenshot
 										? 'wrong'
 										: ''
 								"
@@ -158,7 +161,7 @@
 								:value="game.map"
 								:class="
 									round.filter((m) => m.map === game.map)
-										.length > 1
+										.length > 1 && !takingScreenshot
 										? 'wrong'
 										: ''
 								"

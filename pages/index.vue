@@ -37,7 +37,10 @@
 							Settings
 						</d-button>
 					</div>
-					<config-form @configured="onConfigured" />
+					<config-form
+						@configured="onConfigured"
+						@csv-imported="onCsvImport"
+					/>
 				</div>
 				<div
 					v-else-if="!showSettings"
@@ -52,6 +55,7 @@
 					</div>
 					<bracket-table
 						:bracket-type="type"
+						:imported-csv="importedCsv"
 						:nb-games-finals="nbGamesFinals"
 						:nb-games-normal="nbGamesNormal"
 						:nb-rounds="nbRounds"
@@ -109,6 +113,7 @@ export default {
 	},
 
 	data: () => ({
+		importedCsv  : [],
 		nbGamesFinals: 5,
 		nbGamesNormal: 3,
 		nbRounds     : -1,
@@ -126,6 +131,14 @@ export default {
 			this.nbRounds      = parseInt(nbRounds)
 			this.nbGamesNormal = parseInt(nbGamesNormal)
 			this.nbGamesFinals = parseInt(nbGamesFinals)
+		},
+
+		onCsvImport ({ type, data }) {
+			this.importedCsv   = data
+			this.nbGamesFinals = Math.max(data[0].filter(m => m.map || m.mode).length, data[data.length - 1].filter(m => m.map || m.mode).length)
+			this.nbGamesNormal = data[0].filter(m => m.map || m.mode).length
+			this.nbRounds      = parseInt(data.length)
+			this.type          = parseInt(type)
 		},
 
 		reset () {

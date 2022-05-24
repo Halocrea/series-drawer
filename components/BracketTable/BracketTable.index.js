@@ -27,6 +27,11 @@ export default {
 					.includes(val)
 		},
 
+		importedCsv: {
+			type    : Array,
+			required: false
+		},
+
 		nbGamesFinals: {
 			type    : Number,
 			required: true
@@ -45,9 +50,9 @@ export default {
 
 	data: () => ({
 		generated      : [],
-		generating     : true,
-		highlightedMap : '',
-		highlightedMode: '',
+		generating     : false,
+		highlightedMap : 'none',
+		highlightedMode: 'none',
 		roundPrefixes  : {
 			WINNERS_BRACKET: 'WB ',
 			LOSERS_BRACKET : 'LB ',
@@ -58,8 +63,9 @@ export default {
 			LOSERS_BRACKET : 'LF',
 			GRAND_FINALS   : 'Reset'
 		},
-		usedMaps : [],
-		usedModes: []
+		takingScreenshot: false,
+		usedMaps        : [],
+		usedModes       : []
 	}),
 
 	computed: {
@@ -159,7 +165,10 @@ export default {
 	},
 
 	beforeMount () {
-		this.generateBracket()
+		if (this.importedCsv?.length <= 0)
+			this.generateBracket()
+		else
+			this.generated = JSON.parse(JSON.stringify(this.importedCsv))
 	},
 
 	methods: {
@@ -379,6 +388,8 @@ export default {
 		},
 
 		async takeScreenshot () {
+			this.takingScreenshot = true
+
 			const res = await this.$html2canvas(this.$refs.printable, { type: 'dataURL' })
 			const a   = document.createElement('a')
 			a.setAttribute('href', res)
@@ -386,6 +397,8 @@ export default {
 			document.body.appendChild(a)
 			a.click()
 			document.body.removeChild(a)
+
+			this.takingScreenshot = false
 		},
 
 		// https://stackoverflow.com/a/2450976
