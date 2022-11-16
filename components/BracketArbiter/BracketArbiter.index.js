@@ -26,17 +26,19 @@ export default {
 		},
 		baseRoundObj: {
 			name    : '',
-			seriesId: '0000000002',
+			seriesId: '0000000003',
 			rounds  : []
 		},
 		bracketType: -1,
 		mapIds     : [
 			{ name: 'Aquarius', id: 'cjZd6R3zR1' },
+			{ name: 'Argyle', id: 'xhgAv7pgnp' },
 			{ name: 'Bazaar', id: '7Yx0939r1' },
 			{ name: 'Catalyst', id: 'sc-yRazeo2' },
 			{ name: 'Live Fire', id: '0WKsbDBTp1' },
 			{ name: 'Recharge', id: 'WyrQgCgwtq1' },
-			{ name: 'Streets', id: 'sc-yRcgfo1' }
+			{ name: 'Streets', id: 'sc-yRcgfo1' },
+			{ name: 'The Pit', id: 'hMvyhUav76' }
 		],
 		modeIds: [
 			{ name: 'CTF', id: 'rjT-bcz3b1' },
