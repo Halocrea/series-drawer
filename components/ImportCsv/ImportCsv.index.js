@@ -40,11 +40,11 @@ export default {
 
 	methods: {
 		guessBracketType (roundName) {
-			let matchIdx = Object.values(roundPrefixes).find(v => roundName.startsWith(v))
+			let matchIdx = Object.values(roundPrefixes).findIndex(v => roundName.startsWith(v))
 			if (matchIdx >= 0)
 				return BRACKET_TYPES[Object.keys(roundPrefixes)[matchIdx]].index
 			else {
-				matchIdx = Object.values(finalsPrefixes).find(v => roundName.startsWith(v))
+				matchIdx = Object.values(finalsPrefixes).findIndex(v => roundName.startsWith(v))
 				if (matchIdx >= 0)
 					return BRACKET_TYPES[Object.keys(finalsPrefixes)[matchIdx]].index
 			}
