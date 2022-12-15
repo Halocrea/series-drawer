@@ -7,11 +7,11 @@ export const objectives = [
 	{ mode: 'SH', map: 'Recharge' },
 	{ mode: 'OB', map: 'Streets' },
 	{ mode: 'KotH', map: 'Live Fire' },
-	{ mode: 'CTF', map: 'Catalyst' },
 	{ mode: 'OB', map: 'Recharge' },
 	{ mode: 'KotH', map: 'Streets' },
 	{ mode: 'SH', map: 'Live Fire' },
-	{ mode: 'CTF', map: 'The Pit' }
+	{ mode: 'CTF', map: 'Empyrean' },
+	{ mode: 'CTF', map: 'Detachment' }
 ]
 
 export const slayers = [
@@ -19,5 +19,5 @@ export const slayers = [
 	{ mode: 'TS', map: 'Live Fire' },
 	{ mode: 'TS', map: 'Recharge' },
 	{ mode: 'TS', map: 'Streets' },
-	{ mode: 'TS', map: 'The Pit' }
+	{ mode: 'TS', map: 'Empyrean' }
 ]

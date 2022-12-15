@@ -35,6 +35,7 @@ export default {
 			{ name: 'Argyle', id: 'xhgAv7pgnp' },
 			{ name: 'Bazaar', id: '7Yx0939r1' },
 			{ name: 'Catalyst', id: 'sc-yRazeo2' },
+			{ name: 'Detachment', id: 'zhNd7F5Uff' },
 			{ name: 'Live Fire', id: '0WKsbDBTp1' },
 			{ name: 'Recharge', id: 'WyrQgCgwtq1' },
 			{ name: 'Streets', id: 'sc-yRcgfo1' },
