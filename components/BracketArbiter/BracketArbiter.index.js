@@ -36,10 +36,10 @@ export default {
 			{ name: 'Bazaar', id: '7Yx0939r1' },
 			{ name: 'Catalyst', id: 'sc-yRazeo2' },
 			{ name: 'Detachment', id: 'zhNd7F5Uff' },
+			{ name: 'Empyrean', id: 'hMvyhUav76' },
 			{ name: 'Live Fire', id: '0WKsbDBTp1' },
 			{ name: 'Recharge', id: 'WyrQgCgwtq1' },
-			{ name: 'Streets', id: 'sc-yRcgfo1' },
-			{ name: 'The Pit', id: 'hMvyhUav76' }
+			{ name: 'Streets', id: 'sc-yRcgfo1' }
 		],
 		modeIds: [
 			{ name: 'CTF', id: 'rjT-bcz3b1' },
