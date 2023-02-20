@@ -49,7 +49,7 @@
 	td[data-setting=''] {
 		@apply bg-black bg-opacity-40 border-0;
 		&:last-child {
-			@apply border-r border-r-gray-500;
+			@apply border-r border-gray-500;
 		}
 	}
 

@@ -79,6 +79,9 @@ export default {
 			}
 		}
 	},
+	purgeCSS: {
+		paths: ['components/**/*.vue', 'layouts/**/*.vue', 'pages/**/*.vue']
+	},
 
 	svgSprite: {
 		input : '~/assets/icons/svg',
