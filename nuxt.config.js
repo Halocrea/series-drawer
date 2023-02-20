@@ -1,3 +1,5 @@
+import path from 'path'
+
 export default {
 	// Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 	ssr: false,
@@ -70,7 +72,13 @@ export default {
 	modules: [],
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
-	build: {},
+	build: {
+		postcss: {
+			plugins: {
+				tailwindcss: path.resolve(__dirname, './tailwind.config.js')
+			}
+		}
+	},
 
 	svgSprite: {
 		input : '~/assets/icons/svg',
