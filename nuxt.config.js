@@ -74,8 +74,10 @@ export default {
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		postcss: {
-			plugins: {
-				tailwindcss: path.resolve(__dirname, './tailwind.config.js')
+			postcssOptions: {
+				plugins: {
+					tailwindcss: path.resolve(__dirname, './tailwind.config.js')
+				}
 			}
 		}
 	},
