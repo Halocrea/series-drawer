@@ -10,8 +10,7 @@ export const objectives = [
 	{ mode: 'OB', map: 'Recharge' },
 	{ mode: 'KotH', map: 'Streets' },
 	{ mode: 'SH', map: 'Live Fire' },
-	{ mode: 'CTF', map: 'Empyrean' },
-	{ mode: 'CTF', map: 'Detachment' }
+	{ mode: 'CTF', map: 'Empyrean' }
 ]
 
 export const slayers = [

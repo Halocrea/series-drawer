@@ -7,13 +7,13 @@ export const allMaps = [
 	'Catalyst',
 	'Deadlock',
 	'Detachment',
+	'Empyrean',
 	'Fragmentation',
 	'Highpower',
 	'Launch Site',
 	'Live Fire',
 	'Recharge',
-	'Streets',
-	'The Pit'
+	'Streets'
 ]
 
 export const allModes = [
