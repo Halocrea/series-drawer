@@ -1,8 +1,21 @@
 <template>
-	<div class="w-full">
+	<div
+		v-if="!switching"
+		class="w-full"
+	>
 		<div class="w-full my-4 px-4 py-2 text-center bg-yellow-600 text-white">
 			<p class="font-bold">Notice</p>
 			<p>Your modified settings will be kept only for this session.</p>
+		</div>
+		<div class="w-full flex justify-center">
+			<d-button
+				variant="warning"
+				@click="switchSettings"
+			>
+				<span class="inline-block w-full text-center">
+					{{ weLoveBTB ? 'HCS Settings' : 'WeLoveBTB Settings (Experimental)' }}
+				</span>
+			</d-button>
 		</div>
 		<div class="w-full my-4 p-4">
 			<div class="max-w-2xl text-sm">
@@ -193,9 +206,9 @@
 		</div>
 		<div class="w-full flex justify-between items-center">
 			<d-button
+				variant="simple"
 				@click="$emit('close')"
 			>
-				variant="simple"
 				Cancel
 			</d-button>
 			<d-button

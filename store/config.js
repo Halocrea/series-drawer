@@ -1,10 +1,16 @@
-import { objectives, slayers } from '~/utils/mapModeCombos'
+import {
+	btbObjectives,
+	btbSlayers,
+	objectives,
+	slayers
+} from '~/utils/mapModeCombos'
 
 export const state = () => ({
 	objectives,
 	slayers,
 	specialMode: 'TS',
-	tSGames    : [1, 4, 6, 8]
+	tSGames    : [1, 4, 6, 8],
+	weLoveBTB  : false
 })
 
 export const getters = {
@@ -16,10 +22,23 @@ export const getters = {
 	getSlayerMaps : state => state.slayers.map(s => s.map),
 	getSlayers    : state => state.slayers,
 	getSpecialMode: state => state.specialMode,
-	getTSGames    : state => state.tSGames
+	getTSGames    : state => state.tSGames,
+	getWeLoveBTB  : state => state.weLoveBTB
 }
 
 export const mutations = {
+	setBTBSettings (state) {
+		state.weLoveBTB  = true
+		state.objectives = btbObjectives
+		state.slayers    = btbSlayers
+	},
+
+	setDefaultSettings (state) {
+		state.weLoveBTB  = false
+		state.objectives = objectives
+		state.slayers    = slayers
+	},
+
 	setObjectives (state, objectives) {
 		state.objectives = objectives
 	},

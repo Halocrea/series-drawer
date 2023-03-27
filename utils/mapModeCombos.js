@@ -20,3 +20,21 @@ export const slayers = [
 	{ mode: 'TS', map: 'Streets' },
 	{ mode: 'TS', map: 'Empyrean' }
 ]
+
+export const btbObjectives = [
+	{ mode: '1F', map: 'Exile' },
+	{ mode: '1F', map: 'Kusini Bay' },
+	{ mode: '1F', map: 'Peatland' },
+	{ mode: 'CTF', map: 'Behemoth' },
+	{ mode: 'CTF', map: 'Incubus' },
+	{ mode: 'CTF', map: 'Rat\'s Nest' },
+	{ mode: 'CTF', map: 'Wayont' },
+	{ mode: 'DOM', map: 'Liwa' }
+]
+
+export const btbSlayers = [
+	{ mode: 'TS', map: 'Behemoth' },
+	{ mode: 'TS', map: 'Incubus' },
+	{ mode: 'TS', map: 'Rat\'s Nest' },
+	{ mode: 'TS', map: 'Wayont' }
+]

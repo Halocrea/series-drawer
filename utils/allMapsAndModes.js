@@ -30,3 +30,21 @@ export const allModes = [
 	{ key: 'TS', name: 'Team Slayer' },
 	{ key: 'TC', name: 'Total Control' }
 ]
+
+export const btbMaps = [
+	'Behemoth',
+	'Exile',
+	'Incubus',
+	'Kusini Bay',
+	'Liwa',
+	'Peatland',
+	'Rat\'s Nest',
+	'Wayont'
+]
+
+export const btbModes = [
+	{ key: '1F', name: '1 Flag' },
+	{ key: 'CTF', name: 'Capture the Flag' },
+	{ key: 'DOM', name: 'Domination' },
+	{ key: 'TS', name: 'Team Slayer' }
+]

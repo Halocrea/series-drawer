@@ -156,7 +156,8 @@ export default {
 			objectives    : 'config/getObjectives',
 			slayers       : 'config/getSlayers',
 			specialMode   : 'config/getSpecialMode',
-			tSGames       : 'config/getTSGames'
+			tSGames       : 'config/getTSGames',
+			weLoveBTB     : 'config/getWeLoveBTB'
 		})
 	},
 

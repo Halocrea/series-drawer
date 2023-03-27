@@ -86,6 +86,7 @@
 				TXT
 			</d-button>
 			<d-button
+				v-if="!weLoveBTB"
 				variant="simple"
 				size="sm"
 				@click="() => {

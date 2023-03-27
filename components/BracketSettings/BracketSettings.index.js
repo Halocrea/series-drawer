@@ -4,7 +4,12 @@ import DButton    from '~/components/form/DButton/DButton.vue'
 import DSelect    from '~/components/form/DSelect/DSelect.vue'
 import DTextField from '~/components/form/DTextField/DTextField.vue'
 
-import { allMaps, allModes } from '~/utils/allMapsAndModes'
+import {
+	allMaps,
+	allModes,
+	btbMaps,
+	btbModes
+} from '~/utils/allMapsAndModes'
 
 export default {
 	components: {
@@ -19,7 +24,8 @@ export default {
 		editableObjectives: [],
 		editableSlayers   : [],
 		editableSpeMode   : '',
-		editableTSGames   : ''
+		editableTSGames   : '',
+		switching         : false
 	}),
 
 	computed: {
@@ -51,7 +57,8 @@ export default {
 			objectives : 'config/getObjectives',
 			slayers    : 'config/getSlayers',
 			specialMode: 'config/getSpecialMode',
-			tSGames    : 'config/getTSGames'
+			tSGames    : 'config/getTSGames',
+			weLoveBTB  : 'config/getWeLoveBTB'
 		})
 	},
 
@@ -87,6 +94,21 @@ export default {
 			immediate: true,
 			handler (val) {
 				this.editableTSGames = val.map(v => v + 1).join(',')
+			}
+		},
+
+		weLoveBTB: {
+			immediate: true,
+			handler (val) {
+				if (val) {
+					this.allMaps  = btbMaps
+					this.allModes = btbModes
+					this.setBTBSettings()
+				} else {
+					this.allMaps  = allMaps
+					this.allModes = allModes
+					this.setDefaultSettings()
+				}
 			}
 		}
 	},
@@ -132,11 +154,29 @@ export default {
 			this.$emit('close')
 		},
 
+		switchSettings () {
+			this.switching = true
+			if (!this.weLoveBTB) {
+				this.allMaps  = btbMaps
+				this.allModes = btbModes
+				this.setBTBSettings()
+			} else {
+				this.allMaps  = allMaps
+				this.allModes = allModes
+				this.setDefaultSettings()
+			}
+			this.$nextTick(() => {
+				this.switching = false
+			})
+		},
+
 		...mapMutations({
-			updateObjectives : 'config/setObjectives',
-			updateSlayers    : 'config/setSlayers',
-			updateSpecialMode: 'config/setSpecialMode',
-			updateTSGames    : 'config/setTSGames'
+			setBTBSettings    : 'config/setBTBSettings',
+			setDefaultSettings: 'config/setDefaultSettings',
+			updateObjectives  : 'config/setObjectives',
+			updateSlayers     : 'config/setSlayers',
+			updateSpecialMode : 'config/setSpecialMode',
+			updateTSGames     : 'config/setTSGames'
 		})
 	}
 }
