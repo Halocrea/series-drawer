@@ -13,6 +13,7 @@ export const allMaps = [
 	'Launch Site',
 	'Live Fire',
 	'Recharge',
+	'Solitude',
 	'Streets'
 ]
 

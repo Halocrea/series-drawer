@@ -39,6 +39,7 @@ export default {
 			{ name: 'Empyrean', id: 'hMvyhUav76' },
 			{ name: 'Live Fire', id: '0WKsbDBTp1' },
 			{ name: 'Recharge', id: 'WyrQgCgwtq1' },
+			{ name: 'Solitude', id: 'FP3tPYYPmSt' },
 			{ name: 'Streets', id: 'sc-yRcgfo1' }
 		],
 		modeIds: [
